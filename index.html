@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Detector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="status-icon" id="statusIcon">🌙</div>
+        <div class="status-text" id="statusText">Dark Mode</div>
+        <div class="description" id="description">Your system is currently using dark mode</div>
+        <button class="refresh-btn" onclick="checkDarkMode()">Check Again</button>
+        
+        <div class="additional-info">
+                <span>
+                    This app uses <a class="sparkly" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">CSS media queries</a> to detect your system's color scheme preference.
+                </span>
+                <br>
+                <span>
+                    Change your system settings to see it update automatically!
+                </span>
+        </div>
+    </div>
+
+    <script>
+        function checkDarkMode() {
+            const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const statusIcon = document.getElementById('statusIcon');
+            const statusText = document.getElementById('statusText');
+            const description = document.getElementById('description');
+            
+            if (isDarkMode) {
+                statusIcon.textContent = '🌙';
+                statusText.textContent = 'Dark Mode';
+                description.textContent = 'Your system is currently using dark mode';
+            } else {
+                statusIcon.textContent = '☀️';
+                statusText.textContent = 'Light Mode';
+                description.textContent = 'Your system is currently using light mode';
+            }
+            
+            // throw in a little juice for the fans
+            statusIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                statusIcon.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Check on page load
+        checkDarkMode();
+
+        // Listen for changes in color scheme preference
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkDarkMode);
+    </script>
+</body>
+</html>
